@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+lb config noauto \
+     --mode devuan \
+     --initsystem sysvinit \
+     --distribution excalibur \
+     --parent-distribution excalibur \
+     --parent-debian-installer-distribution excalibur \
+     --parent-mirror-bootstrap "http://deb.devuan.org/merged" \
+     --parent-mirror-chroot "http://deb.devuan.org/merged" \
+     --parent-mirror-binary "http://deb.devuan.org/merged" \
+     --mirror-bootstrap "http://deb.devuan.org/merged" \
+     --mirror-chroot "http://deb.devuan.org/merged" \
+     --mirror-binary "http://deb.devuan.org/merged" \
+     --archive-areas "main contrib non-free non-free-firmware" \
+     --system live \
+     --security false \
+     --image-name "devuan-security-amd64" \
+     --binary-images iso-hybrid \
+     "${@}"

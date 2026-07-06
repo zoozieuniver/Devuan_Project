@@ -1,0 +1,25 @@
+# Desktop Environment & Display Manager
+xfce4
+xfce4-goodies
+lightdm
+xorg
+
+# Security & Pentesting Tools
+ufw
+nmap
+wireshark
+tshark
+tcpdump
+keepassxc
+macchanger
+tor
+
+# Core Utilities & System Management
+sudo
+htop
+curl
+wget
+git
+fastfetch
+firmware-linux-free
+bash-completion

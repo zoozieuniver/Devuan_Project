@@ -556,9 +556,88 @@ def generate():
     add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.13_devuan_grub_menu.png"), "3.23", "Стартове меню завантажувача GRUB встановленої системи")
     add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.14_devuan_first_login.png"), "3.24", "Перший вхід до консолі встановленої ОС")
 
+    # ==========================================
+    # ФАЗА 3. КОНФІГУРУВАННЯ LIVE-BUILD
+    # ==========================================
+    doc.add_page_break()
+    add_dstu_heading(doc, "4 ФАЗА 3. КОНФІГУРУВАННЯ LIVE-BUILD", level=1)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_heading(doc, "4.1 Принципи та структура конфігурації", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Для побудови дистрибутиву Devuan Security OS використовується інструментарій live-build, який дозволяє повністю "
+        "автоматизувати процес створення live-систем на базі Debian-подібних ОС. Конфігурація системи описується за допомогою "
+        "декларативних списків пакетів, скриптів автоматизації та конфігураційних файлів, які переносяться у складальне "
+        "середовище (Build Box) та використовуються під час збірки."
+    )
+
+    add_dstu_heading(doc, "4.2 Сценарій ініціалізації auto/config", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Сценарій auto/config використовується для генерації базового дерева конфігурації. У ньому визначаються ключові "
+        "параметри дистрибутиву: робочий режим встановлюється в значення devuan, цільовий дистрибутив — excalibur (Devuan 6), "
+        "архітектура процесора — amd64, тип вихідного файлу — iso-hybrid. Для оптимізації процесу збірки та уникнення конфліктів "
+        "із застарілими серверами оновлень Debian, параметр security вимкнено (оскільки в Devuan оновлення безпеки інтегровано в "
+        "основний репозиторій). Програма налаштовується на використання дзеркала репозиторіїв http://deb.devuan.org/merged."
+    )
+
+    add_dstu_heading(doc, "4.3 Списки пакетів та кастомізація середовища", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Списки пакетів для встановлення описуються у файлі config/package-lists/custom.list.chroot. Конфігурація містить: "
+        "графічну оболонку XFCE 4 (пакети xfce4, xfce4-goodies) та дисплейний менеджер lightdm; базовий сервер відображення xorg; "
+        "пакети безпеки та аудиту мережі (ufw, nmap, wireshark, tshark, tcpdump, keepassxc, macchanger, tor); службові утиліти "
+        "(sudo, htop, curl, wget, git, fastfetch, bash-completion). Через видалення застарілої утиліти neofetch із репозиторіїв "
+        "Devuan Excalibur, у збірці застосовано сучасну альтернативу fastfetch."
+    )
+    add_dstu_paragraph(
+        doc,
+        "Для конфігурування мережі у live-системі створено файл config/includes.chroot/etc/network/interfaces, який забезпечує "
+        "автоматичне підняття інтерфейсів eth0 та wlan0 за допомогою DHCP. Також додано конфігурацію config/includes.chroot/etc/sudoers.d/live, "
+        "яка надає стандартному live-користувачу (user) права виконання адміністративних команд без запиту пароля. Додатково "
+        "виконано патч скрипту /usr/lib/live/build/config у ВМ для примусового вибору підсистеми live-config-sysvinit (замість systemd) "
+        "при використанні ініціалізації sysvinit."
+    )
+
+    # ==========================================
+    # ФАЗА 4. ЗБІРКА ISO-ОБРАЗУ
+    # ==========================================
+    doc.add_page_break()
+    add_dstu_heading(doc, "5 ФАЗА 4. ЗБІРКА ISO-ОБРАЗУ", level=1)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_heading(doc, "5.1 Процес компонування та створення SquashFS", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Процес збірки запускається послідовністю команд lb clean, lb config та sudo lb build. Під час виконання відбувається "
+        "створення базової кореневої файлової системи (bootstrap), встановлення ядра Linux, системного завантажувача та всіх "
+        "заданих у конфігурації пакетів. На завершальному етапі вміст chroot-оточення пакується у стиснуту файлову систему SquashFS."
+    )
+    add_dstu_paragraph(
+        doc,
+        "На рисунку 3.1 зображено процес пакування образу файлової системи за допомогою squashfs-tools у складальному "
+        "середовищі віртуальної машини."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "3.1_devuan_building_process.png"), "3.25", "Створення стиснутого образу файлової системи SquashFS")
+
+    add_dstu_heading(doc, "5.2 Генерація гібридного ISO-образу та його трансфер", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Після завершення створення SquashFS інструментарій live-build інтегрує його із завантажувачем syslinux та створює "
+        "фінальний гібридний образ devuan-security-amd64-amd64.hybrid.iso. Отриманий файл розміром 1018 МБ копіюється з "
+        "віртуальної машини на хост-систему за допомогою безпечного протоколу SCP."
+    )
+    add_dstu_paragraph(
+        doc,
+        "На рисунку 3.2 показано результат виведення розміру та прав доступу створеного ISO-образу на хост-машині."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "3.2_devuan_iso_created.png"), "3.26", "Результат створення гібридного ISO-образу на хост-машині")
+
+    # Placeholder for Phase 5
     placeholders = [
-        ("4 ФАЗА 3. КОНФІГУРУВАННЯ LIVE-BUILD", "", []),
-        ("5 ФАЗА 4. ЗБІРКА ISO-ОБРАЗУ", "", []),
         ("6 ФАЗА 5. ТЕСТУВАННЯ ТА ОПТИМІЗАЦІЯ (QA)", "", []),
     ]
 
@@ -566,15 +645,8 @@ def generate():
         doc.add_page_break()
         add_dstu_heading(doc, title, level=1)
         add_dstu_paragraph(doc, first_line_indent=False)
-        if body:
-            add_dstu_paragraph(doc, body)
-        if items:
-            add_dstu_paragraph(doc, "Скріншоти для даного розділу:", bold=True)
-            for item in items:
-                p = add_dstu_paragraph(doc, f"\u2014 {item} [очікується]", italic=True)
-        if not body:
-            add_dstu_paragraph(doc,
-                "Розділ буде заповнено на відповідному етапі розробки.", italic=True)
+        add_dstu_paragraph(doc,
+            "Розділ буде заповнено на відповідному етапі розробки (тестування live-образу у ВМ).", italic=True)
 
     # ==========================================
     # ЗБЕРЕЖЕННЯ
