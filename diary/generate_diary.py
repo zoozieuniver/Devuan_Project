@@ -459,16 +459,104 @@ def generate():
     # ==========================================
     # РОЗДІЛ 3–6: ЗАГЛУШКИ
     # ==========================================
+    # ==========================================
+    # РОЗДІЛ 3: ФАЗА 2
+    # ==========================================
+    doc.add_page_break()
+    add_dstu_heading(doc, "3 ФАЗА 2. ВСТАНОВЛЕННЯ DEVUAN БЕЗ ГРАФІЧНОГО СЕРЕДОВИЩА", level=1)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_paragraph(
+        doc,
+        "Метою цієї фази є безпосереднє встановлення операційної системи Devuan Excalibur 6.1.1 "
+        "на віртуальний диск створеної ВМ. Для мінімізації споживання ресурсів та підвищення "
+        "безпеки системи, встановлення проводиться у мінімальній конфігурації (без графічної оболонки)."
+    )
+
+    # 3.1
+    add_dstu_heading(doc, "3.1 Початкове завантаження та вибір локалізації", level=2)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_paragraph(
+        doc,
+        "При завантаженні з інсталяційного образу користувачу пропонується menu вибору режиму "
+        "встановлення. Обрано стандартний текстовий режим встановлення (Install). На наступних "
+        "кроках налаштовано мову інтерфейсу, країну місцезнаходження та розкладку клавіатури."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.1_devuan_boot_menu.png"), "3.1", "Меню завантаження Devuan Excalibur")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.2_devuan_language.png"), "3.2", "Вибір мови встановлення (English)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.3.1_devuan_location_other.png"), "3.3", "Вибір регіону місцезнаходження (Other)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.3.2_devuan_location_europe.png"), "3.4", "Вибір континенту (Europe)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.3.3_devuan_location_ukraine.png"), "3.5", "Вибір країни (Ukraine)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.4_devuan_locale.png"), "3.6", "Вибір локалі за замовчуванням (en_US.UTF-8)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.5_devuan_keyboard.png"), "3.7", "Вибір розкладки клавіатури (American English)")
+
+    # 3.2
+    add_dstu_heading(doc, "3.2 Налаштування мережі та облікових записів", level=2)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_paragraph(
+        doc,
+        "На цьому етапі відбувається автоматичне отримання мережевих налаштувань через DHCP, "
+        "введення імені хоста (hostname), а також створення облікових записів адміністратора (root) "
+        "та звичайного користувача системи."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.6_devuan_hostname.png"), "3.8", "Задання імені хоста (devuan-security)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.7_devuan_root_password.png"), "3.9", "Встановлення паролю суперкористувача (root)")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.8_devuan_user_create.png"), "3.10", "Створення облікового запису звичайного користувача")
+
+    # 3.3
+    add_dstu_heading(doc, "3.3 Розмітка дискового простору", level=2)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_paragraph(
+        doc,
+        "Для встановлення системи обрано метод автоматичної розмітки всього дискового простору (Guided - use entire disk). "
+        "Оскільки створюється віртуальна машина розробника (Build Box), обрано найпростішу схему розмітки, де всі файли "
+        "розташовуються на одному розділі (All files in one partition)."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.10.1_devuan_disk_method.png"), "3.11", "Вибір методу розмітки диска")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.10.2_devuan_disk_select.png"), "3.12", "Вибір цільового диска для розмітки")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.10.3_devuan_disk_scheme.png"), "3.13", "Вибір схеми розмітки диска")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.10.4_devuan_disk_overview.png"), "3.14", "Огляд створених розділів")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.10.5_devuan_disk_confirm.png"), "3.15", "Підтвердження запису таблиці розділів на диск")
+
+    # 3.4
+    add_dstu_heading(doc, "3.4 Налаштування пакетного менеджера та вибір ПЗ", level=2)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_paragraph(
+        doc,
+        "Після копіювання базової системи виконується конфігурування джерела пакунків (APT mirror) та вибір "
+        "програмного забезпечення для встановлення. У вікні вибору ПЗ (Tasksel) відключено всі графічні "
+        "середовища, залишено лише стандартні системні утиліти. Також обрано систему ініціалізації sysvinit."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.11.1_devuan_mirror_country.png"), "3.16", "Вибір країни дзеркала репозиторіїв")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.11.2_devuan_mirror_select.png"), "3.17", "Вибір адреси дзеркала репозиторію")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.11.3_devuan_software_selection.png"), "3.18", "Вибір компонентів системи у меню Tasksel")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.11.4_devuan_init_system.png"), "3.19", "Вибір системи ініціалізації (sysvinit)")
+
+    # 3.5
+    add_dstu_heading(doc, "3.5 Встановлення завантажувача та перший вхід", level=2)
+    add_dstu_paragraph(doc, first_line_indent=False)
+
+    add_dstu_paragraph(
+        doc,
+        "Завершальним етапом є встановлення системного завантажувача GRUB у головний завантажувальний запис (MBR) "
+        "диска /dev/sda та перезавантаження системи для першого запуску."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.12.1_devuan_grub_install.png"), "3.20", "Запит на встановлення завантажувача GRUB")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.12.2_devuan_grub_device.png"), "3.21", "Вибір пристрою для встановлення завантажувача GRUB")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.12_devuan_install_complete.png"), "3.22", "Повідомлення про успішне завершення встановлення")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.13_devuan_grub_menu.png"), "3.23", "Стартове меню завантажувача GRUB встановленої системи")
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "2.14_devuan_first_login.png"), "3.24", "Перший вхід до консолі встановленої ОС")
+
     placeholders = [
-        ("3 ФАЗА 2. ВСТАНОВЛЕННЯ DEVUAN БЕЗ ГРАФІЧНОГО СЕРЕДОВИЩА",
-         "Цей розділ буде заповнено після завершення встановлення Devuan у VMware Workstation. "
-         "Ключовим етапом є відмова від будь-якого графічного середовища на кроці вибору "
-         "компонентів у Tasksel та встановлення лише SSH server і Standard system utilities.",
-         ["3.1 \u2014 Boot menu Devuan Excalibur",
-          "3.2 \u2014 Вибір мови встановлення",
-          "3.3 \u2014 Розмітка диска",
-          "3.4 \u2014 Екран Tasksel (без графічного середовища)",
-          "3.5 \u2014 Перший вхід у систему"]),
         ("4 ФАЗА 3. КОНФІГУРУВАННЯ LIVE-BUILD", "", []),
         ("5 ФАЗА 4. ЗБІРКА ISO-ОБРАЗУ", "", []),
         ("6 ФАЗА 5. ТЕСТУВАННЯ ТА ОПТИМІЗАЦІЯ (QA)", "", []),
