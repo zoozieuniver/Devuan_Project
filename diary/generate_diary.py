@@ -636,17 +636,41 @@ def generate():
 
     add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "3.2_devuan_iso_created.png"), "3.26", "Результат створення гібридного ISO-образу на хост-машині")
 
-    # Placeholder for Phase 5
-    placeholders = [
-        ("6 ФАЗА 5. ТЕСТУВАННЯ ТА ОПТИМІЗАЦІЯ (QA)", "", []),
-    ]
+    # ==========================================
+    # ФАЗА 5. ТЕСТУВАННЯ ТА ОПТИМІЗАЦІЯ (QA)
+    # ==========================================
+    doc.add_page_break()
+    add_dstu_heading(doc, "6 ФАЗА 5. ТЕСТУВАННЯ ТА ОПТИМІЗАЦІЯ (QA)", level=1)
+    add_dstu_paragraph(doc, first_line_indent=False)
 
-    for title, body, items in placeholders:
-        doc.add_page_break()
-        add_dstu_heading(doc, title, level=1)
-        add_dstu_paragraph(doc, first_line_indent=False)
-        add_dstu_paragraph(doc,
-            "Розділ буде заповнено на відповідному етапі розробки (тестування live-образу у ВМ).", italic=True)
+    add_dstu_heading(doc, "6.1 Верифікація завантаження та графічного інтерфейсу", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Для перевірки працездатності створеного дистрибутиву Devuan Security OS було створено нову віртуальну машину "
+        "з параметрами: 2 ГБ оперативної пам'яті, 2 ядра процесора та підключеним ISO-образом. Завантаження системи "
+        "відбулося в автоматичному режимі (Live CD). Графічний інтерфейс XFCE 4.20 запустився успішно з автоматичною "
+        "авторизацією користувача user."
+    )
+    add_dstu_paragraph(
+        doc,
+        "На рисунку 3.3 показано завантажений робочий стіл XFCE 4 нашої кастомної операційної системи."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "4.1_devuan_live_desktop.png"), "3.27", "Робочий стіл XFCE 4 кастомного дистрибутиву Devuan Security OS")
+
+    add_dstu_heading(doc, "6.2 Перевірка відсутності системного менеджера systemd", level=2)
+    add_dstu_paragraph(
+        doc,
+        "Для підтвердження повної відповідності архітектурним вимогам Devuan (відсутності systemd) було виконано перевірку "
+        "процесу з ідентифікатором PID 1. Успішне виведення команди 'ps -p 1' підтверджує, що в ролі головного процесу ініціалізації "
+        "використовується класичний init (sysvinit)."
+    )
+    add_dstu_paragraph(
+        doc,
+        "На рисунку 3.4 зображено термінал із виведенням інформації про систему через fastfetch та перевіркою PID 1."
+    )
+
+    add_screenshot(doc, os.path.join(SCREENSHOTS_DIR, "4.2_devuan_sysvinit_proof.png"), "3.28", "Перевірка процесу ініціалізації PID 1 у терміналі Live-системи")
 
     # ==========================================
     # ЗБЕРЕЖЕННЯ
