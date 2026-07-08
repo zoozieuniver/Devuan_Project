@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Security Monitor Launch
+Exec=xfce4-terminal --fullscreen -e btop
+Terminal=false
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true

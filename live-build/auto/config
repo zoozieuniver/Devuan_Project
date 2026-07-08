@@ -19,4 +19,5 @@ lb config noauto \
      --security false \
      --image-name "devuan-security-amd64" \
      --binary-images iso-hybrid \
+     --debian-installer false \
      "${@}"

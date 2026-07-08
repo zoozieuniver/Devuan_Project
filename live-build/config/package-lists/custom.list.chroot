@@ -1,25 +1,30 @@
-# Desktop Environment & Display Manager
-xfce4
-xfce4-goodies
-lightdm
+# Графічне середовище та дисплейний менеджер
 xorg
+lightdm
+lightdm-gtk-greeter
+xfce4
+xfce4-whiskermenu-plugin
+xfce4-power-manager
 
-# Security & Pentesting Tools
-ufw
+# Мережевий інструментарій інженера безпеки
+network-manager
 nmap
-wireshark
-tshark
-tcpdump
-keepassxc
-macchanger
-tor
-
-# Core Utilities & System Management
-sudo
-htop
 curl
 wget
-git
+tcpdump
+
+# Медіа-стек для систем відеоспостереження (CCTV)
+mpv
+pavucontrol
+alsa-utils
+va-driver-all
+mesa-va-drivers
+
+# Системний моніторинг та віддалений доступ
+sysvinit-core
+btop
+lm-sensors
+openssh-server
+thunar-volman
+gvfs
 fastfetch
-firmware-linux-free
-bash-completion
